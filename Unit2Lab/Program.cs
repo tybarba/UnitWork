@@ -8,6 +8,29 @@ namespace Unit2Lab
 {
     internal class Program
     {
+        static decimal ReadPositiveDecimal(string priceString)
+        {
+            bool isPositive = false;
+            decimal price = 0;
+            string userAnswer = priceString;
+            while (!isPositive)
+            {
+                if (!string.IsNullOrEmpty(userAnswer))
+                {
+                    price = Math.Round(decimal.Parse(userAnswer), 2);
+                    if (price > 0) { isPositive = true; break; }
+                }
+                Console.WriteLine("You entered a wrong number.");
+                Console.Write("Enter the price again: ");
+                userAnswer = Console.ReadLine();
+                //if (!string.IsNullOrEmpty(userAnswer))
+                //{
+                //    price = Math.Round(decimal.Parse(Console.ReadLine()), 2);
+                //    if (price > 0) { isPositive = true; }
+                //}
+            }
+            return price;
+        }
         static void Main(string[] args)
         {
             ////###### CALCULATING SOLUTIONS #######
@@ -15,13 +38,13 @@ namespace Unit2Lab
             /// 2. Tip Calculator
             Console.WriteLine("Hi! Welcome to your tip calculator. Let's get started by finding the subtotal of your bill.");
             Console.Write("Please enter the price of any starters: ");
-            decimal startersPrice = Math.Round(decimal.Parse(Console.ReadLine()), 2);
+            decimal startersPrice = ReadPositiveDecimal(Console.ReadLine());
             Console.Write("Okay. Now, enter the price of the main course: ");
-            decimal mainCoursePrice = Math.Round(decimal.Parse(Console.ReadLine()), 2);
+            decimal mainCoursePrice = ReadPositiveDecimal(Console.ReadLine());
             Console.Write("Great! Please enter the price of any desserts: ");
-            decimal dessertPrice = Math.Round(decimal.Parse(Console.ReadLine()),2);
+            decimal dessertPrice = ReadPositiveDecimal(Console.ReadLine());
             Console.Write("Wonderful. Finally, enter the price of any drinks: ");
-            decimal drinksPrice = Math.Round(decimal.Parse(Console.ReadLine()));
+            decimal drinksPrice = ReadPositiveDecimal(Console.ReadLine());
             decimal subtotal = startersPrice + mainCoursePrice + dessertPrice + drinksPrice;
             Console.WriteLine($"Fantastic! Your subtotal is: ${subtotal}");
             Console.WriteLine("Do you want to leave a tip? (y/n)");
@@ -59,6 +82,7 @@ namespace Unit2Lab
 
 
             }
+
 
 
             ////1. Pythagoras' Theorum
