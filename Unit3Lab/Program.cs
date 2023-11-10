@@ -14,6 +14,15 @@ namespace Unit3Lab
             const double basicRateLimit = 37700;
             const double higherTaxLimit = 125140;
             const double basePersonalAllowance = 12570;
+            const string displayMenuString = "1. Display tax bands\r\n2. Enter annual income\r\n3. Display personal allowance\r\n4. Display taxable income\r\n5. Display tax paid\r\n6. Exit";
+
+            //USER DATA THAT NEEDS TO BE FILLED
+            string userAnnualIncomeString = "";
+            double userGrossAnnualIncome = 0;
+            double userPersonalAllowance = 0;
+            double userTaxableIncome =0 ;
+            double userPayableTaxes = 0;
+            //bool annualIncomeEntered = false;
 
             double GetPersonalAllowance(double userGrossAnnualIncome)
             {
@@ -82,24 +91,129 @@ namespace Unit3Lab
                 taxPayable += remainder * additionalTaxRate;
                 return taxPayable;             
             }
+
+            bool IncomeEntered()
+            {
+                return (!string.IsNullOrEmpty(userAnnualIncomeString));
+            }
+
+            void DisplayMenu()
+            {
+                Console.WriteLine(displayMenuString);
+            }
+
+            void DisplayTaxBrackets()
+            {
+                Console.WriteLine("          Tax Bands 2022/2023\r\n-----------------------------------------\r\nBasic Rate:        20%    £0-£37700\r\nHigher Rate:       40%    £37701-£125140\r\nAdditional Rate:   45%    above £125140");
+            }
+
+            void DisplayPersonalAllowance()
+            {
+                if (!IncomeEntered())
+                {
+                    Console.WriteLine("You haven't entered your annual income yet.");
+                }
+                else
+                {
+                    Console.WriteLine("Your Personal Allowance is: $" + userPersonalAllowance);
+                }
+            }
+
+            void DisplayTaxableIncome()
+            {
+                if (!IncomeEntered())
+                {
+                    Console.WriteLine("You haven't entered your annual income yet.");
+                }
+                else
+                {
+                    Console.WriteLine("Your taxable income is: $" + userTaxableIncome);
+                }
+                
+            }
+
+            void DisplayTaxPaid()
+            {
+                if (!IncomeEntered())
+                {
+                    Console.WriteLine("You haven't entered your annual income yet.");
+                }
+                else
+                {
+                    Console.WriteLine("Your income taxes are: $" + userPayableTaxes);
+                }
+                
+            }
+
+            double ParseDoubleForever(string amountString)
+            {
+                bool enteredDouble = double.TryParse(amountString, out double amount);
+                while (!enteredDouble)
+                {
+                    Console.WriteLine("You did not enter a valid amount.\n Please try again: ");
+                    enteredDouble = double.TryParse(Console.ReadLine(), out amount);
+                }
+                return amount;
+            }
+            
+            int GetUserChoice()
+            {
+                Console.Write("Choose an option: ");
+                string choiceString = Console.ReadLine();
+                bool enteredNumber = int.TryParse(choiceString, out int choice);
+                while (!enteredNumber)
+                {
+                    Console.WriteLine("You did not enter a number. Please try again.\n\n");
+                    DisplayMenu();
+                    Console.Write("Choose an option: ");
+                    choiceString = Console.ReadLine();
+                    enteredNumber = int.TryParse(choiceString, out choice);
+                }
+                return choice;
+            }
+
+            void CalculateAll()
+            {
+                userGrossAnnualIncome = ParseDoubleForever(userAnnualIncomeString);
+                userPersonalAllowance = GetPersonalAllowance(userGrossAnnualIncome);
+                userTaxableIncome = GetTaxableIncome(userGrossAnnualIncome, userPersonalAllowance);
+                userPayableTaxes = CalculateTaxes(userTaxableIncome);
+            }
+
+            void GetUserAnnualIncome()
+            {
+                Console.Write("Please enter your annual income. DO NOT include commas. \n$");
+                userAnnualIncomeString = Console.ReadLine();
+                CalculateAll();
+                Console.WriteLine($"Thanks. You entered {userAnnualIncomeString}");
+            }
+             
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                Console.Write("Please enter your annual income. DO NOT include commas. \n$");
-
-                string userAnnualIncomeString = Console.ReadLine();
-                double userGrossAnnualIncome = double.Parse(userAnnualIncomeString);
-                double userPersonalAllowance = GetPersonalAllowance(userGrossAnnualIncome);
-                double userTaxableIncome = GetTaxableIncome(userGrossAnnualIncome, userPersonalAllowance);
-                double userPayableTaxes = CalculateTaxes(userTaxableIncome);
-
-                Console.WriteLine("Your gross annual income is: $" + userGrossAnnualIncome);
-                Console.WriteLine("Your Personal Allowance is: $" + userPersonalAllowance);
-                Console.WriteLine("Your taxable income is: $" + userTaxableIncome);
-                Console.WriteLine("Your income taxes are: $" + +userPayableTaxes);
-
-                Console.WriteLine("Play again? y/n");
-                continuePlaying = (Console.ReadLine() == "y");
+                DisplayMenu();
+                int userChoice = GetUserChoice();
+                switch (userChoice)
+                {
+                    case 1:
+                        DisplayTaxBrackets();
+                        break;
+                    case 2:
+                        GetUserAnnualIncome();
+                        break;
+                    case 3:
+                        DisplayPersonalAllowance();
+                        break;
+                    case 4:
+                        DisplayTaxableIncome();
+                        break;
+                    case 5:
+                        DisplayTaxPaid();
+                        break;
+                    case 6:
+                        continuePlaying = false;
+                        break;
+                }
             }
 
 
