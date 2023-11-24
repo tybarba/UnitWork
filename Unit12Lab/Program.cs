@@ -1,29 +1,30 @@
 ﻿namespace Unit12Lab
 {
-    struct Person
-    {
-        public string givenName;
-        public string familyName;
-        public string phoneNumber;
-    }
+    //struct Person
+    //{
+    //    public string givenName;
+    //    public string familyName;
+    //    public string phoneNumber;
+    //}
     internal class Program
     {
         static void Main(string[] args)
         {
-            Person alan;
-            alan.givenName = "Alan";
-            alan.familyName = "Turing";
-            alan.phoneNumber = "0123456789";
+            TicTacToe game = new TicTacToe();
+            game.SetUpGame();
+            game.PlayGame();
 
-            Console.WriteLine("Original details");
-            Console.WriteLine(alan.givenName + ' ' + alan.familyName + " : " + alan.phoneNumber);
-            Console.WriteLine();
+            //Person alan = new Person("Alan", "Turing", "0123456789");
 
-            updatePhoneNumber(alan);
+            //Console.WriteLine("Original details");
+            //Console.WriteLine(alan.GivenName + ' ' + alan.FamilyName + " : " + alan.PhoneNumber);
+            //Console.WriteLine();
 
-            Console.WriteLine();
-            Console.WriteLine("Updated details");
-            Console.WriteLine(alan.givenName + ' ' + alan.familyName + " : " + alan.phoneNumber);
+            //updatePhoneNumber(alan);
+
+            //Console.WriteLine();
+            //Console.WriteLine("Updated details");
+            //Console.WriteLine(alan.GivenName + ' ' + alan.FamilyName + " : " + alan.PhoneNumber);
         }
 
         static void updatePhoneNumber(Person personToUpdate)
@@ -33,7 +34,7 @@
 
             // Code to check that the new phone number is valid could go here.
 
-            personToUpdate.phoneNumber = newPhoneNumber;
+            personToUpdate.PhoneNumber = newPhoneNumber;
         }
     }
 }
