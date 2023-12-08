@@ -12,10 +12,10 @@ namespace Unit12Lab
         private int BoardSize;
         private string[,] hengs;
 
-        public TicTacToeBoard()
-        {
-            hengs = new string[0,0];
-        }
+        //public TicTacToeBoard()
+        //{
+        //    hengs = new string[0,0];
+        //}
 
         public TicTacToeBoard(int boardSize)
         {
@@ -23,6 +23,8 @@ namespace Unit12Lab
             hengs = new string[BoardSize, BoardSize];
             SetUpBoard();
         }
+
+        public TicTacToeBoard() : this(3) { }
 
         private void SetUpBoard()
         {

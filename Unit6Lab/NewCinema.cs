@@ -14,7 +14,8 @@ namespace Unit6Lab
     }
     public class NewCinema
     {
-        Movie[] movies = new Movie[NumMovies];
+        //Movie[] movies = new Movie[NumMovies];
+        List<Movie> movies = new List<Movie>();
         //string[] availableMovies = new string[NumMovies];
         //int[] ageRatings =  new int[NumMovies];
         const int NumMovies = 4;
@@ -31,7 +32,8 @@ namespace Unit6Lab
                 Movie newMovie = new Movie();
                 newMovie.MovieTitle = reader.ReadLine();
                 newMovie.AgeRating = int.Parse(reader.ReadLine());
-                movies[movieIndex] = newMovie;
+                //movies[movieIndex] = newMovie;
+                movies.Add(newMovie);
                 movieIndex++;
             }
             //int moviesArrayIndex = 0;
@@ -62,7 +64,8 @@ namespace Unit6Lab
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             GetMovies();
             //Core task 5
-            for(int i = 0; i<movies.Length; i++)
+            //for(int i = 0; i<movies.Length; i++)
+            for (int i = 0; i < movies.Count; i++)
             {
                 string movieToWrite = movies[i].MovieTitle;
                 Console.WriteLine(movieToWrite);
@@ -81,7 +84,8 @@ namespace Unit6Lab
             }
 
             Console.WriteLine("Currently showing...");
-            for(int i = 0; i<movies.Length; i++)
+            //for(int i = 0; i<movies.Length; i++)
+            for (int i = 0; i<movies.Count; i++)
             {
                 if (userAge >= movies[i].AgeRating)
                 {
@@ -95,7 +99,8 @@ namespace Unit6Lab
             Console.Write("Enter the number of the movie you'd like to see: ");
             string userChoiceString = Console.ReadLine();
             bool choiceIsInt = Int32.TryParse(userChoiceString, out int userChoice);
-            while(!choiceIsInt || userChoice -1 > movies.Length || userChoice - 1 < 0)
+            //while(!choiceIsInt || userChoice -1 > movies.Length || userChoice - 1 < 0)
+            while (!choiceIsInt || userChoice - 1 > movies.Count || userChoice - 1 < 0)
             {
                 Console.Write("Enter the number of the movie you'd like to see: ");
                 userChoiceString = Console.ReadLine();

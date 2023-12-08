@@ -16,8 +16,10 @@ namespace Unit12Lab
         private int turn = 0;
         public TicTacToe()
         {
-            //set empty board
-            Board = new TicTacToeBoard();
+            ////set empty board
+            //Board = new TicTacToeBoard();
+
+            SetUpGame();
         }
 
         public void PlayGame()

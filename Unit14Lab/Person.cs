@@ -1,10 +1,56 @@
-﻿namespace Unit13Lab
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Unit14Lab
 {
-    class Person
+    public class Person
     {
+        private static string defaultDomainName = "my.ntu.ac.uk";
+
         private string givenName;
         private string familyName;
         private string phoneNumber;
+        private string emailAddress;
+
+        public Person(string givenName, string familyName, string phoneNumber)
+        {
+            this.setName(givenName, familyName);
+            this.setPhoneNumber(phoneNumber);
+            this.emailAddress = $"{this.givenName}.{this.familyName}{DateTime.Now.Year}@{defaultDomainName}";
+        }
+        public Person(string givenName, string familyName) : this (givenName, familyName, "8888888888")
+        {
+            
+        }
+
+        public static void setDefaultDomainName(string newDefaultDomainName)
+        {
+            //string errorMessage = "";
+            if (string.IsNullOrEmpty(newDefaultDomainName))
+            {
+                throw new Exception("New default domain name cannot be null or empty");
+            }
+            if (string.IsNullOrWhiteSpace(newDefaultDomainName))
+            {
+                throw new Exception("New default domain name cannot be null or whitespace");
+            }
+            for (int i = 0; i<newDefaultDomainName.Length; i++)
+            {
+                if (newDefaultDomainName[i] == ' ')
+                {
+                    throw new Exception($"New default domain name cannot contain spaces. Error located at char[{i}]");
+                }
+            }
+            defaultDomainName = newDefaultDomainName;
+        }
+
+        public string getEmailAddress()
+        {
+            return this.emailAddress;
+        }
 
         public void setPhoneNumber(string newPhoneNumber)
         {
@@ -59,31 +105,12 @@
 
         public bool hasPhoneNumber()
         {
-            return this.phoneNumber == null;
+            return this.phoneNumber != null;
         }
 
         public string getPhoneNumber()
         {
             return this.phoneNumber;
-        }
-    }
-
-    class Program
-    {
-        static void Main()
-        {
-            Person alan = new Person();
-
-            alan.setName("Alan","Turing");
-            alan.setPhoneNumber("bletchly1");
-            //alan.setFamilyName("Turing");
-            Console.WriteLine(alan.getName());
-
-
-            if (alan.hasPhoneNumber())
-            {
-                Console.WriteLine(alan.getPhoneNumber());
-            }
         }
     }
 }
